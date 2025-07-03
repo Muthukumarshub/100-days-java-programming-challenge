@@ -1,0 +1,49 @@
+import java.util.*;
+public class Main
+{
+    public static char AND(char a,char b){
+        int aa=a-'0';
+        int bb=b-'0';
+        int val=aa&bb;
+        return (char) (val+'0');
+    }
+    public static char OR(char a,char b){
+        int aa=a-'0';
+        int bb=b-'0';
+        int val=aa|bb;
+        return (char) (val+'0');
+    }
+    public static char XOR(char a,char b){
+        int aa=a-'0';
+        int bb=b-'0';
+        int val=aa^bb;
+        return (char) (val+'0');
+    }
+    public static int OperationBinaryString(char[] ch){
+        
+	    for(int i=0;i<ch.length-2;i+=2){
+	        if(ch[i+1] == 'A'){
+	            char res=AND(ch[i],ch[i+2]);
+	            ch[i+2]=res;
+	        }
+	        else if(ch[i+1] == 'B'){
+	            char res=OR(ch[i],ch[i+2]);
+	            ch[i+2]=res;
+	        }
+	        else{
+	            char res=XOR(ch[i],ch[i+2]);
+	            ch[i+2]=res;
+	        }
+	    }
+	    int n=ch.length;
+	    int val=ch[n-1]-'0';
+	    return val;
+    }
+	public static void main(String[] args) {
+	    Scanner scan = new Scanner(System.in);
+	    String s =scan.nextLine();
+	    char[] ch=s.toCharArray();
+	    int res=OperationBinaryString(ch);
+	    System.out.println(res);
+	}
+}
