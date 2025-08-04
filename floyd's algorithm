@@ -1,0 +1,88 @@
+import java.util.*;
+class Node{
+    int data;
+    Node next;
+    Node(int data){
+        this.data=data;
+        this.next = null;
+    }
+}
+class Linkedlist {
+    Node head;
+    Linkedlist(){
+        head=null;
+    }
+    
+    //insert at the end;
+    public void insert(int data){
+        Node n = new Node(data);
+        if(head == null){
+            head=n;
+            System.out.println("Inserted");
+        }
+        else{
+            Node temp=head;
+            while(temp.next!=null){
+                temp=temp.next;
+            }
+            temp.next=n;
+            System.out.println("Inserted");
+        }
+    }
+    
+    public void print(){
+        Node temp=head;
+        if(temp == null){
+            System.out.println("Linkedlist is null");
+        }
+        else{
+          while(temp!=null){
+              System.out.print(temp.data+"->");
+              temp=temp.next;
+          } 
+                System.out.println();
+
+        }
+    }
+    public void makecycle(){
+        Node temp=head;
+        if(temp != null){
+            while(temp.next!=null){
+                temp=temp.next;
+            }
+            temp.next=head;
+        }
+    }
+    
+    public boolean iscycle(){
+        Node temp=head;
+        if(head!=null){
+            Node slow=temp;
+            Node fast=temp;
+            while(slow.next!=null && fast.next!=null && fast.next.next!=null){
+                slow=slow.next;
+                fast=fast.next.next;
+                
+                if(slow == fast){
+                    System.out.println(fast.data);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+}
+public class Main
+{
+	public static void main(String[] args) {
+	   Linkedlist l = new Linkedlist();
+	   l.insert(10);
+	   l.insert(20);
+	   l.insert(30);
+	   l.insert(40);
+	   l.insert(50);
+	  l.makecycle();
+	   System.out.println(l.iscycle());
+}
+}
