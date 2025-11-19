@@ -1,0 +1,152 @@
+package LLD;
+import java.util.*;
+public class Main {
+	public static boolean check(char arr[][],char t,int r,int c) {
+		for(int i=0;i<r;i++) {
+		  for(int j=0;j<c;j++) {
+			if((i==0 && j == 0)) {
+				if(findbottomright(arr,t,r,c) || findfor(arr,t,i,c) || findbot(arr,t,r,j)) {
+					return true;
+				}
+			}
+			else if(i==r-1 && j == 0) {
+				if(findtopright(arr,t,i,c) || findfor(arr,t,i,c)) {
+					return true;
+				}
+			}
+			else if(i == 0) {
+				if(findbot(arr,t,r,j)) {
+					return true;
+				}
+			}
+			else if(j==0) {
+				if(findfor(arr,t,i,c)) {
+					return true;
+				}
+			}
+		}
+		}
+		return false;
+	}
+	 //for diagonal bottom to top
+	 public static boolean findtopright(char arr[][],char t,int r, int c) {
+		 int res=0;
+		 for(int i=r-1;i>=0;i--) {
+					 if(arr[i][res++] == t) {
+						 continue;
+					 }
+					 else {
+						 return false;
+					 }
+		 }
+		 return true;
+	 }
+	 
+	 //for diagonal top to bottom
+	 public static boolean findbottomright(char arr[][],char t,int r,int c) {
+		 for(int i=0;i<r;i++) {
+					 if(arr[i][i] == t) {
+						 continue;
+					 }
+					 else {
+						 return false;
+					 }
+			}
+		 return true;
+	 }
+	 
+	 //horizontal ok
+	 
+	 public static boolean findfor(char[][] arr,char t,int r,int c) {
+		 boolean res = true;
+		 for(int i=0;i<c;i++) {
+			 if(arr[r][i] == t) {
+				 continue;
+			 }
+			 else {
+				 return false;
+			 }
+		 }
+		 return true;
+	 }
+	 
+	 //vertical ok
+	 
+	 public static boolean findbot(char[][] arr,char t,int r,int j) {
+		 for(int i=0;i<r;i++) {
+			 if(arr[i][j] == t) {
+				 continue;
+			 }
+			 else {
+				 return false;
+			 }
+		 }
+		 return true;
+	 }
+	
+	//To print the values
+	public static void display(char arr[][],int r,int c) {
+		for(int i=0;i<r;i++) {
+			for(int j=0;j<c;j++) {
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+	
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		int r=scan.nextInt();
+		int c=scan.nextInt();
+		
+		char arr[][]= new char[r][c];
+		boolean n=true;
+		for(int i=0;i<arr.length;i++) {
+			for(int j=0;j<arr[0].length;j++) {
+				arr[i][j]='.';
+			}
+		}
+		int ii=0;
+		while(n) {
+			if(ii == r*c && check(arr,'X',r,c) == false && check(arr,'O',r,c) == false) {
+				System.out.println("Match draws!");
+				n=false;
+			}
+			if(ii%2 == 0) {
+				System.out.println("X's turn, enter coordinates : ");
+				int x=scan.nextInt();
+				int y= scan.nextInt();
+				if(arr[x][y]=='.') {
+					arr[x][y]='X';
+					ii++;
+					display(arr,r,c);
+					if(check(arr,'X',r,c)) {
+						System.out.println("X WINS!!!");
+						n=false;
+					}
+				}
+				else {
+					System.out.println("Coordinates already occupied with : "+arr[x][y]);
+				}
+				
+			}
+			else {
+				System.out.println("O's turn, enter coordinates : ");
+				int x=scan.nextInt();
+				int y=scan.nextInt();
+				if(arr[x][y]=='.') {
+					arr[x][y]='O';
+					ii++;
+					display(arr,r,c);
+					if(check(arr,'O',r,c)) {
+						System.out.println("O WINS!!!");
+						n=false;
+					}
+				}
+				else {
+					System.out.println("Coordinates already occupied with : "+arr[x][y]);
+				}
+			}
+		}
+	}
+}
